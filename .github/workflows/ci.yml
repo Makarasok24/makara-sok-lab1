@@ -43,3 +43,52 @@ jobs:
           name: coverage-report-${{matrix.node-version}}
           path: coverage/
 
+      # New deployment job
+    deploy:
+      runs-on: ubuntu-latest
+      needs: build-and-test  # Only deploy if build-and-test succeeds
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Set up Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: '20.x'
+
+        - name: Install Vercel CLI
+          run: npm install --global vercel@latest
+
+        - name: Pull Vercel Environment Information
+          run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+        - name: Build Project Artifacts
+          run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+        - name: Deploy to Vercel
+          run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+    # Alternative deployment approach using Vercel GitHub Action
+    deploy-with-action:
+      runs-on: ubuntu-latest
+      needs: build-and-test
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Deploy to Vercel
+          uses: amondnet/vercel-action@v25
+          with:
+            vercel-token: ${{ secrets.VERCEL_TOKEN }}
+            vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+            vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+            vercel-args: '--prod'
+            working-directory: ./
+
+      
+
+

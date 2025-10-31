@@ -2,7 +2,7 @@ import express from "express";
 const app = express();
 
 app.get("/", (req, res) => {
-    res.send("Hello, CI/CD!");
+    res.send("Hello, CI/CD Pipline!");
 });
 
 // New function: Get user by ID
