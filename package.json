@@ -8,7 +8,8 @@
     "start": "node server.js",
     "test": "mocha --exit",
     "lint": "eslint .",
-    "coverage": "nyc --reporter=text --reporter=lcov npm test"
+    "coverage": "nyc npm test",
+    "coverage:report": "nyc report --reporter=html && open coverage/index.html"
   },
   "repository": {
     "type": "git",
