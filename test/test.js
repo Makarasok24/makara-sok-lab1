@@ -1,10 +1,11 @@
-import { request } from "supertest";
+import request from "supertest";
+import { expect } from "chai";
 import app from "../app.js";
 
 describe("GET /", () => {
     it("should return Hello, GitHub Actions!", async () => {
         const res = await request(app).get("/");
-        expect(res.statusCode).toEqual(200);
-        expect(res.text).toBe("Hello, GitHub Actions!");
+        expect(res.statusCode).to.equal(200);
+        expect(res.text).to.equal("Hello, GitHub Actions!");
     });
 });

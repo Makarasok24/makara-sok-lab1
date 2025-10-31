@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha --exit",
     "start": "node server.js",
-    "lint": "eslint . --ext .js"
+    "test": "mocha --exit",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,9 @@
     "express": "^5.1.0",
     "mocha": "^11.7.4",
     "supertest": "^7.1.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "globals": "^16.4.0"
   }
 }
